@@ -14,9 +14,10 @@
 </head>
 <body>
     <nav>
+        {% comment %} <a href="/">home</a> |  {% endcomment %}
+        {% comment %} <a href="/about">about</a> |  {% endcomment %}
         <a href="/">home</a> | 
-        <a href="/about">about</a> | 
-        <a href="{% url 'posts:list' %}">news</a> |
+        {% comment %} <a href="{% url 'posts:list' %}">news</a> | {% endcomment %}
         {% if user.is_authenticated %}
             <a href="{% url 'posts:new-post' %}">add post</a> |
             <form class="logout" action="{% url 'users:logout' %}" method="post">
