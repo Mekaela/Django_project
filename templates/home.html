@@ -1,4 +1,8 @@
 {% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
+{% endblock %}
 
 {% block title %}
     Home
@@ -9,7 +13,7 @@
 <section class="hero-container">
     <img src="../media/ISA_farm.jpg" alt="Farm field" class="hero-image">
     <div class="hero-content">
-        <h1>Farm Smarter</h1>
+        <h1>Easier Farming Tech</h1>
         <p>MyFarmTech helps you to improve soil health while reducing your time on the computer</p>
         {% comment %} <a href="#contact" class="cta-button">Get Started</a> {% endcomment %}
     </div>
@@ -33,7 +37,7 @@
 </section>
 <section class="cta" id="contact">
     <h2>Ready to Farm Smarter?</h2>
-    <p>Join thousands of farmers improving their soil with less effort.</p>
+    <p>Improve your farm's soil with less effort.</p>
     <form class="contact-form">
         <input type="email" placeholder="Your Email" required>
         <button type="submit" class="cta-button">Request a Demo</button>
