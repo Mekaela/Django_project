@@ -1,17 +1,26 @@
 {% extends 'layout.html' %}
 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/login.css" %}">
+{% endblock %}
+
 {% block title %}
     User Login
 {% endblock %}
 
 {% block content %}
-    <h1>User Login</h1>
-    <form class="form-with-validation" action="/users/login/" method="post">
-        {% csrf_token %}
-        {{ form }}
-        {% if request.GET.next %}
-            <input type="hidden" name="next" value="{{ request.GET.next }}" />
-        {% endif %}
-        <button class="form-submit">Submit</button>
-    </form>
+<div class="login-wrapper">
+    <div class="login-container">
+        <h1 class="login-header">MyFarmTech</h1>
+        <form class="form-with-validation" action="/users/login/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}" />
+            {% endif %}
+            <button class="form-submit">Login</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
