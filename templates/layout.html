@@ -20,11 +20,11 @@
         {% comment %} <a href="/">home</a> |  {% endcomment %}
         {% comment %} <a href="/about">about</a> |  {% endcomment %}
         {% if request.path != '/' %}
-            <a href="/">home</a>
+            {% comment %} <a href="/">home</a> {% endcomment %}
         {% endif %}
         {% comment %} <a href="{% url 'posts:list' %}">news</a> | {% endcomment %}
         {% if user.is_authenticated %}
-            <a href="{% url 'posts:new-post' %}">add post</a> |
+            <a href="{% url 'posts:new-post' %}">add record</a> |
             <form class="logout" action="{% url 'users:logout' %}" method="post">
                 {% csrf_token %}
                 <button class="logout-button" aria-label="User Logout" title="User Logout">logout</button>
