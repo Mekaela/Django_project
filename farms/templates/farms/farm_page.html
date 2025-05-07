@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ farm.title }}      
+{% endblock  %}
+
+{% block content %}
+    <section>
+        <img 
+            class="banner"
+            src="{{ farm.banner.url }}"
+            alt="{{ farm.title }}"
+        />
+        <h1>{{ farm.title }}</h1>
+        <p>{{ farm.date }}</p>
+        {% comment %} <p>{{ farm.body }}</p> {% endcomment %}
+    </section>
+    
+{% endblock  %}

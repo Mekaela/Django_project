@@ -1,0 +1,25 @@
+{% comment %} This page shouldn't be accessible unless logged in. add functionality {% endcomment %}
+{% extends "layout.html" %}
+
+{% block title %}
+    Farms   
+{% endblock  %}
+
+{% block content %}
+<section>
+    <h1>Farms</h1>
+
+    {% for farm in farms %}
+        <article class="farm">
+            <h2>
+                <a href="{% url 'farms:page' slug=farm.slug %}">
+                    {{ farm.title }}
+                </a>
+            </h2>
+            <p>{{ farm.date }}</p>
+            {% comment %} <p>{{ farm.body }}</p> {% endcomment %}
+        </article>
+    {% endfor %}
+</section>
+    
+{% endblock  %}
