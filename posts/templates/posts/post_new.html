@@ -20,7 +20,7 @@
         fertiliser type can automatically add the NPK ratio 
         operator name can be the person logged in (but editable) -->
         <div class="form-container">
-            <h1>Agricultural Record System</h1>
+            {% comment %} <h1>Agricultural Record System</h1> {% endcomment %}
             <form id="agricultureForm">
                 <!-- Record Type Selection -->
                 <div class="form-group record-type">
@@ -43,7 +43,7 @@
                     </div>
     
                     <div class="form-group">
-                        <label for="field">Field/Plot Number:</label>
+                        <label for="field">Plot Number:</label>
                         <input type="text" id="field" name="field" required>
                     </div>
     
@@ -214,7 +214,6 @@
     
                 <div class="form-actions">
                     <button type="submit" class="submit-btn">Save Record</button>
-                    <button type="reset" class="reset-btn">Clear Form</button>
                 </div>
             </form>
         </div>

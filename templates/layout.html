@@ -15,7 +15,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="nav">
+    <div class="">
         {% url '/' as home_url %}
         {% url 'users/login' as login_url %}
         {% comment %} <a href="/">home</a> |  {% endcomment %}
@@ -25,18 +25,30 @@
         {% endif %}
         {% comment %} <a href="{% url 'posts:list' %}">news</a> | {% endcomment %}
         {% if user.is_authenticated %}
-            <a href="{% url 'posts:new-post' %}">add record</a> |
             <form class="logout" action="{% url 'users:logout' %}" method="post">
                 {% csrf_token %}
-                <button class="logout-button" aria-label="User Logout" title="User Logout">logout</button>
+                <button class="log-button" aria-label="User Logout" title="User Logout">logout</button>
             </form> 
         {% else %}
             {% comment %} <a href="{% url 'users:register' %}">register</a> | {% endcomment %}
             {% if request.path != '/users/login/' %}
-                <a href="{% url 'users:login' %}">login</a>
+                <a href="{% url 'users:login' %}" class="log-button">login</a>
             {% endif %}
         {% endif %}
         </div>
+        {% if user.is_authenticated %}
+            <div class='nav'>
+                {% if request.path != '/posts/new-post/' %}
+                    <a href="{% url 'posts:new-post' %}">add record</a> 
+                {% endif %} 
+                {% if request.path != '/data/' %}
+                    <a class='nav-item' href="{% url 'posts:new-post' %}">Data</a> 
+                {% endif %} 
+                {% if request.path != '/farms/' %}
+                    <a class='nav-item' href="{% url 'posts:new-post' %}">Setup</a> 
+                {% endif %} 
+            </div>
+        {% endif %}
     <main>
         {% block content %}
         {% endblock %}
