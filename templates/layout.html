@@ -45,7 +45,7 @@
                     <a class='nav-item' href="{% url 'posts:new-post' %}">Data</a> 
                 {% endif %} 
                 {% if request.path != '/farms/' %}
-                    <a class='nav-item' href="{% url 'posts:new-post' %}">Setup</a> 
+                    <a class='nav-item' href="{% url 'farms:new-farm' %}">Setup</a> 
                 {% endif %} 
             </div>
         {% endif %}
