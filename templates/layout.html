@@ -39,12 +39,12 @@
         {% if user.is_authenticated %}
             <div class='nav'>
                 {% if request.path != '/posts/new-post/' %}
-                    <a href="{% url 'posts:new-post' %}">add record</a> 
+                    <a class='nav-item' href="{% url 'posts:new-post' %}">Add</a> 
                 {% endif %} 
                 {% if request.path != '/data/' %}
                     <a class='nav-item' href="{% url 'posts:new-post' %}">Data</a> 
                 {% endif %} 
-                {% if request.path != '/farms/' %}
+                {% if request.path != '/farms/new-farm/' %}
                     <a class='nav-item' href="{% url 'farms:new-farm' %}">Setup</a> 
                 {% endif %} 
             </div>

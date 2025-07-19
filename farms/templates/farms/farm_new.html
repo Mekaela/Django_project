@@ -15,25 +15,33 @@
     <body>
         {% comment %} Start for one farm: plots, coordinates (for weather and growing seasons), crops  {% endcomment %}
         <div>
-            <div class="form-section">
-                <h2 class="form-section-h2">Farm basics</h2>
-                <div class="form-group">
-                    <label for="farm_name" class="form-group-label">Name</label>
-                    <input type="text" id="farm_name" name="farm_name" required>
+            <form method="post" action="">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+                <div class="form-section">
+                    <h2 class="form-section-h2">Farm basics</h2>
+                    <div class="form-group">
+                        <label for="farm_name" class="form-group-label">Name</label>
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="farm_size" class="form-group-label">Size (hectares)</label>
+                        {{ form.size_hectares }}
+                        {{ form.size_hectares.errors }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="farm_location" class="form-group-label">Location</label>
+                        {{ form.farm_lat }}
+                        {{ form.farm_lat.errors }}
+                        {{ form.farm_long }}
+                        {{ form.farm_long.errors }}
+                    </div>
+                    <button type="submit" class="form_submit">Save</button>
                 </div>
-                
-                <div class="form-group">
-                    <label for="farm_size" class="form-group-label">Size (hectares)</label>
-                    <input type="number" id="farm_size" name="farm_size" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="farm_location" class="form-group-label">Location</label>
-                    <input type="text" id="farm_location" name="farm_location" placeholder="latitude" required>
-                    <input type="text" id="farm_location" name="farm_location" placeholder="longitude" required>
-
-                </div>
-            </div>
+            </form>
         </div>
         {% comment %} crop selections {% endcomment %}
         {% comment %} display the farm - this is where blocks will be edited {% endcomment %}
