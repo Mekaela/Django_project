@@ -1,19 +1,26 @@
 {% extends "layout.html" %}
+{% load static %}
+{% block extra_js %}
+{% comment %} <script src="{% static 'js/farm.js' %}" defer></script> {% endcomment %}
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/farm_page.css" %}">
+{% endblock %}
 
 {% block title %}
-    {{ farm.title }}      
+    {{ farm.name }}      
 {% endblock  %}
 
 {% block content %}
-    <section>
-        <img 
-            class="banner"
-            src="{{ farm.banner.url }}"
-            alt="{{ farm.title }}"
-        />
-        <h1>{{ farm.title }}</h1>
-        <p>{{ farm.date }}</p>
-        {% comment %} <p>{{ farm.body }}</p> {% endcomment %}
+    <section class="farm">
+        <article class="farm-basics">
+            <h1 class="farm-name">{{ farm.name }}</h1>
+            <p class="farm-detail">{{ farm.size_hectares }} ha</p>
+            <p class="farm-detail">latitude: {{ farm.farm_lat }}</p>
+            <p class="farm-detail">longitude: {{ farm.farm_long }}</p>
+        </article>
+    
+    <p>Date added: {{ farm.date }}</p>
     </section>
     
 {% endblock  %}

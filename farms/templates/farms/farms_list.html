@@ -1,25 +1,39 @@
-{% comment %} This page shouldn't be accessible unless logged in. add functionality {% endcomment %}
 {% extends "layout.html" %}
+{% load static %}
+{% block extra_js %}
+{% comment %} <script src="{% static 'js/farm.js' %}" defer></script> {% endcomment %}
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/farms_list.css" %}">
+{% endblock %}
 
 {% block title %}
     Farms   
 {% endblock  %}
 
 {% block content %}
-<section>
+<section class="farms-list">
+    {% comment %} This section lists all farms with their details {% endcomment %}
     <h1>Farms</h1>
 
     {% for farm in farms %}
         <article class="farm">
-            <h2>
-                <a href="{% url 'farms:page' slug=farm.slug %}">
-                    {{ farm.title }}
+            <h2 class='farm-name'>
+                <a href="{% url 'farms:farm' slug=farm.slug %}">
+                    {{ farm.name }}
                 </a>
             </h2>
-            <p>{{ farm.date }}</p>
-            {% comment %} <p>{{ farm.body }}</p> {% endcomment %}
+            <p class='farm-detail'>{{ farm.size_hectares }} ha</p>
+            <p class='farm-detail'>latitude: {{ farm.farm_lat }}</p>
+            <p class='farm-detail'>longitude: {{ farm.farm_long }}</p>
         </article>
     {% endfor %}
+    {% if not farms %}
+        <p>No farms available.</p>
+    {% endif %}
+    <a href="{% url 'farms:new-farm' %}" class="new-farm-link">
+        Add New Farm
+    </a>
 </section>
     
 {% endblock  %}
