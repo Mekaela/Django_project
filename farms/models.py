@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify 
+# from django.contrib.gis.db import models as geomodels
 
 class Farm(models.Model):
     name = models.CharField(max_length=75)
@@ -18,3 +19,8 @@ class Farm(models.Model):
     def __str__(self):
         return self.name
 
+# class Block(models.Model):
+#     farm = models.ForeignKey(Farm, related_name="blocks", on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
+#     area = geomodels.PolygonField(srid=4326)
+    # ...other block fields
