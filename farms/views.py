@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
-from .models import Farm
+from .models import Farm, Block
 from django.contrib.auth.decorators import login_required
 from .forms import FarmForm
+from django.core.serializers import serialize
 
-# Create your views here.
+@login_required(login_url="/users/login/")
 def farms_list(request):
     farms = Farm.objects.all().order_by('-date')
     return render(request, 'farms/farms_list.html', { 'farms': farms})
 
+@login_required(login_url="/users/login/")
 def farm_page(request, slug):
     farm = Farm.objects.get(slug=slug)
     return render(request, 'farms/farm_page.html', { 'farm': farm})
