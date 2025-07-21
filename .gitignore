@@ -171,4 +171,4 @@ cython_debug/
 .pypirc
 
 #config files
-settings.py
+myproject/settings.py

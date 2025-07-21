@@ -1,10 +1,16 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_js %}
-{% comment %} <script src="{% static 'js/farm.js' %}" defer></script> {% endcomment %}
+<script src="{% static 'js/farm_page.js' %}" defer></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{% comment %} <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script> {% endcomment %}
+
 {% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/farm_page.css" %}">
+{% comment %} <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" /> {% endcomment %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 {% endblock %}
 
 {% block title %}
@@ -19,7 +25,23 @@
             <p class="farm-detail">latitude: {{ farm.farm_lat }}</p>
             <p class="farm-detail">longitude: {{ farm.farm_long }}</p>
         </article>
-    
+        <article class="blocks">
+            <h2>Blocks</h2>
+            {% if farm.blocks.all %}
+                <ul class="block-list">
+                    {% for block in farm.blocks.all %}
+                        <li class="block-item">
+                            <h3 class="block-name">{{ block.name }}</h3>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </article> 
+            {% else %}
+                <p>No blocks available for this farm.</p>
+            {% endif %}
+
+            <div id="map" style="height: 200px; width: 100%;"></div>
+            
     <p>Date added: {{ farm.date }}</p>
     </section>
     
