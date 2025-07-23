@@ -19,3 +19,9 @@
 .farm-name, .farm-detail {
     padding: 0 0.5rem;   
 }
+
+.farm_map {
+    width: 80%;
+    height: 60vh;
+    margin: 40px 0;
+}

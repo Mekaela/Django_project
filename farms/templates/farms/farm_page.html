@@ -25,23 +25,23 @@
             <p class="farm-detail">latitude: {{ farm.farm_lat }}</p>
             <p class="farm-detail">longitude: {{ farm.farm_long }}</p>
         </article>
-        <article class="blocks">
-            <h2>Blocks</h2>
-            {% if farm.blocks.all %}
-                <ul class="block-list">
-                    {% for block in farm.blocks.all %}
-                        <li class="block-item">
-                            <h3 class="block-name">{{ block.name }}</h3>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </article> 
-            {% else %}
-                <p>No blocks available for this farm.</p>
-            {% endif %}
 
-            <div id="map" style="height: 200px; width: 100%;"></div>
-            
+        <div id="map" class="farm_map"></div>
+        
+        <article class="blocks">
+        <h2>Blocks</h2>
+        {% if farm.blocks.all %}
+            <ul class="block-list">
+                {% for block in farm.blocks.all %}
+                    <li class="block-item">
+                        <h3 class="block-name">{{ block.name }}</h3>
+                    </li>
+                {% endfor %}
+            </ul>
+        </article> 
+        {% else %}
+            <p>No blocks available for this farm.</p>
+        {% endif %}
     <p>Date added: {{ farm.date }}</p>
     </section>
     

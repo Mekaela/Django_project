@@ -4,16 +4,18 @@ console.log("Farm page script loaded");
 LAT_CENTRE = 38.844733; 
 LNG_CENTRE = -9.394690; 
 
-// var map = L.map('map').setView([51.505, -0.09], 13);
-
 document.addEventListener("DOMContentLoaded", function(){
     console.log("inside");
     var map = L.map('map').setView([LAT_CENTRE, LNG_CENTRE], 15); // Set to default farm location
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© OpenStreetMap contributors"
+    // google isn't always up to date, so could update this later
+    L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);
 
-    // // Feature Group to store drawn layers
+   
+
+    // Feature Group to store drawn layers
     // var drawnItems = new L.FeatureGroup();
     // map.addLayer(drawnItems);
 
@@ -36,6 +38,8 @@ document.addEventListener("DOMContentLoaded", function(){
     // });
     // console.log("inside 2");
     // map.addControl(drawControl);
+
+    
 
     // // On drawing complete, prompt for block name and send to backend
     // map.on(L.Draw.Event.CREATED, function (event) {
