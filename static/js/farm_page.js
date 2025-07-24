@@ -1,8 +1,23 @@
 
-console.log("Farm page script loaded");
-
 LAT_CENTRE = 38.844733; 
 LNG_CENTRE = -9.394690; 
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+const csrf_token = getCookie("csrftoken");
 
 document.addEventListener("DOMContentLoaded", function(){
     console.log("inside");
@@ -13,62 +28,60 @@ document.addEventListener("DOMContentLoaded", function(){
         subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);
 
-   
-
     // Feature Group to store drawn layers
-    // var drawnItems = new L.FeatureGroup();
-    // map.addLayer(drawnItems);
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
-    // // Add drawing controls
-    // var drawControl = new L.Control.Draw({
-    //     draw: {
-    //         polyline: false,
-    //         circle: false,
-    //         rectangle: false,
-    //         marker: false,
-    //         circlemarker: false,
-    //         polygon: {
-    //             allowIntersection: false,
-    //             showArea: true
-    //         }
-    //     },
-    //     edit: {
-    //         featureGroup: drawnItems
-    //     }
-    // });
-    // console.log("inside 2");
-    // map.addControl(drawControl);
+    // Add drawing controls
+    var drawControl = new L.Control.Draw({
+        draw: {
+            polyline: false,
+            circle: false,
+            rectangle: false,
+            marker: false,
+            circlemarker: false,
+            polygon: {
+                allowIntersection: false,
+                showArea: true
+            }
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    console.log("inside 2");
+    map.addControl(drawControl);
 
     
 
-    // // On drawing complete, prompt for block name and send to backend
-    // map.on(L.Draw.Event.CREATED, function (event) {
-    //     var layer = event.layer;
-    //     var coords = layer.getLatLngs();
-    //     var name = prompt("Enter block name:");
+    // On drawing complete, prompt for block name and send to backend
+    map.on(L.Draw.Event.CREATED, function (event) {
+        var layer = event.layer;
+        var coords = layer.getLatLngs();
+        var name = prompt("Enter block name:");
 
-    //     // Optionally show popup with name
-    //     layer.bindPopup(name).openPopup();
-    //     drawnItems.addLayer(layer);
+        // Optionally show popup with name
+        layer.bindPopup(name).openPopup();
+        drawnItems.addLayer(layer);
 
-    //     // Prepare GeoJSON for submission
-    //     var geojson = layer.toGeoJSON();
+        // Prepare GeoJSON for submission
+        var geojson = layer.toGeoJSON();
 
-    //     // Send to Django via AJAX (POST)
-    //     fetch("{% url 'block_create' %}", {
-    //          method: "POST",
-    //          headers: {
-    //            "Content-Type": "application/json",
-    //            "X-CSRFToken": "{{ csrf_token }}",
-    //          },
-    //          body: JSON.stringify({
-    //             "name": name,
-    //             "geometry": geojson.geometry
-    //          })
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         alert("Block saved!");
-    //     });
-    // });
+        // Send to Django via AJAX (POST)
+        fetch(blockCreateUrl, {
+             method: "POST",
+             headers: {
+               "Content-Type": "application/json",
+               "X-CSRFToken": csrf_token,
+             },
+             body: JSON.stringify({
+                "name": name,
+                "area": geojson.geometry
+             })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Block saved!");
+        }).catch(e => console.error("Error saving block:", e));
+    });
 });

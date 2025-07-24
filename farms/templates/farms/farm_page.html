@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_js %}
+<script>
+  const blockCreateUrl = "{% url 'block_create' %}";
+  console.log("blockCreateUrl:", blockCreateUrl);
+</script>
 <script src="{% static 'js/farm_page.js' %}" defer></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-{% comment %} <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script> {% endcomment %}
-
+<script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
 {% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/farm_page.css" %}">
-{% comment %} <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" /> {% endcomment %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
 
 {% endblock %}
 
@@ -25,7 +28,6 @@
             <p class="farm-detail">latitude: {{ farm.farm_lat }}</p>
             <p class="farm-detail">longitude: {{ farm.farm_long }}</p>
         </article>
-
         <div id="map" class="farm_map"></div>
         
         <article class="blocks">

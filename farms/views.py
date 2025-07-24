@@ -3,6 +3,9 @@ from .models import Farm, Block
 from django.contrib.auth.decorators import login_required
 from .forms import FarmForm
 from django.core.serializers import serialize
+import json
+from django.http import JsonResponse
+from django.contrib.gis.geos import GEOSGeometry
 
 @login_required(login_url="/users/login/")
 def farms_list(request):
@@ -30,3 +33,21 @@ def farm_new(request):
         print('else')
         form = FarmForm()
     return render(request, 'farms/farm_new.html', {'form': form})
+
+def block_create(request):
+    print(f"Received {request.method} at {request.path}")
+    if request.method == "POST":
+        data = json.loads(request.body)
+        name = data["name"]
+        geom = data["area"]  # GeoJSON dictionary
+
+        # Construct GEOSGeometry from GeoJSON
+        polygon = GEOSGeometry(json.dumps(geom))
+
+        paddock = Block.objects.create(
+            name=name,
+            area=polygon,
+            farm= Farm.objects.get(pk=data.get("farm_id", 1))
+        )
+        return JsonResponse({"status": "ok", "id": paddock.id})
+    return JsonResponse({"error": "POST required"}, status=400)
