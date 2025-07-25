@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const farmSelect = document.getElementById("farm");
+    console.log("farm select element:", farmSelect);
+    const plotSelect = document.getElementById("plot");
+    console.log("plot select element:", document.getElementById("plot"));
+
+    farmSelect.addEventListener("change", function () {
+        const farmId = farmSelect.value;
+        fetch(`/farms/plots-for-farm/${farmId}/`)
+        // Clear plots
+        plotSelect.innerHTML = '<option value="">-- Select Plot --</option>';
+        plotSelect.disabled = true;
+
+        if (farmId) {
+            // Fetch plots for the selected farm
+            fetch(`/farms/plots-for-farm/${farmId}/`)
+                .then(response => response.json())
+                .then(plots => {
+                    plots.forEach(plot => {
+                        const option = document.createElement('option');
+                        option.value = plot.id;
+                        option.textContent = plot.name;
+                        plotSelect.appendChild(option);
+                    });
+                    plotSelect.disabled = false;
+                });
+        }
+    });
+
     const recordTypeSelect = document.getElementById('recordType');
     const allRecordFields = document.querySelectorAll('.record-fields');
     
@@ -44,4 +72,32 @@ document.addEventListener('DOMContentLoaded', function() {
             field.style.display = 'none';
         });
     });
+
+    
+    
+
+    // const farmSelect = document.getElementById("farm");
+    // const blockSelect = document.getElementById("block");
+
+    // farmSelect.addEventListener("change", function () {
+    //     const farmId = farmSelect.value;
+    //     // Clear blocks
+    //     blockSelect.innerHTML = '<option value="">-- Select Block --</option>';
+    //     blockSelect.disabled = true;
+
+    //     if (farmId) {
+    //         // Fetch blocks for the selected farm
+    //         fetch(`block/create/${farmId}/`) 
+    //             .then(response => response.json())
+    //             .then(blocks => {
+    //                 blocks.forEach(block => {
+    //                     const option = document.createElement('option');
+    //                     option.value = block.id;
+    //                     option.textContent = block.name;
+    //                     blockSelect.appendChild(option);
+    //                 });
+    //                 blockSelect.disabled = false;
+    //             });
+    //     }
+    // });
 });

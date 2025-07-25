@@ -127,10 +127,10 @@ h1 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .common-fields,
+    /* .common-fields,
     .record-fields {
         grid-template-columns: 1fr;
-    }
+    } */
     
     .form-group:nth-last-child(-n+2) {
         grid-column: span 1;

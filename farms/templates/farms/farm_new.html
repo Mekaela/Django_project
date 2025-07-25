@@ -13,7 +13,7 @@
 
 {% block content %}
     <body>
-        {% comment %} Start for one farm: plots, coordinates (for weather and growing seasons), crops  {% endcomment %}
+        {% comment %} Start for one farm: block, coordinates (for weather and growing seasons), crops  {% endcomment %}
         <div>
             <form method="post" action="">
             {% csrf_token %}
@@ -43,8 +43,5 @@
                 </div>
             </form>
         </div>
-        {% comment %} crop selections {% endcomment %}
-        {% comment %} display the farm - this is where blocks will be edited {% endcomment %}
-        {% comment %} display the weather {% endcomment %}
     </body>
 {% endblock  %}

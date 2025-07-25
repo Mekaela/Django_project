@@ -51,3 +51,8 @@ def block_create(request):
         )
         return JsonResponse({"status": "ok", "id": paddock.id})
     return JsonResponse({"error": "POST required"}, status=400)
+
+@login_required(login_url="/users/login/")
+def plots_for_farm(request, farm_id):
+    plots = Block.objects.filter(farm_id=farm_id).values('id', 'name')
+    return JsonResponse(list(plots), safe=False)
