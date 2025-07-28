@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Operations List   
+{% endblock  %}
+
+{% block content %}
+<section>
+    <h1>Operations</h1>
+
+    {% for post in posts %}
+        <article class="post">
+            <h2>
+                <a href="{% url 'operation:page' slug=operation.slug %}">
+                    {{ operation.title }}
+                </a>
+            </h2>
+            <p>{{ operation.date }}</p>
+        </article>
+    {% endfor %}
+</section>
+    
+{% endblock  %}

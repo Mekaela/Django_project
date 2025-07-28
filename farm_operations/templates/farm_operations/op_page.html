@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ operation.title }}      
+{% endblock  %}
+
+{% block content %}
+    <section>
+        <img 
+            class="banner"
+            src="{{ operation.banner.url }}"
+            alt="{{ operation.title }}"
+        />
+        <h1>{{ operation.title }}</h1>
+        <p>{{ operation.date }}</p>
+        <p>{{ operation.body }}</p>
+    </section>
+    
+{% endblock  %}

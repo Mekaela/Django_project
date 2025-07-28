@@ -38,11 +38,11 @@
         </div>
         {% if user.is_authenticated %}
             <div class='nav'>
-                {% if request.path != '/posts/new-post/' %}
-                    <a class='nav-item' href="{% url 'posts:new-post' %}">Add</a> 
+                {% if request.path != '/farm_operations/new-op/' %}
+                    <a class='nav-item' href="{% url 'farm_operations:new-op' %}">Add</a> 
                 {% endif %} 
                 {% if request.path != '/data/' %}
-                    <a class='nav-item' href="{% url 'posts:new-post' %}">Data</a> 
+                    <a class='nav-item' href="{% url 'farm_operations:new-op' %}">Data</a> 
                 {% endif %} 
                 {% if request.path != '/farms/' %}
                     <a class='nav-item' href="{% url 'farms:list' %}">Setup</a> 

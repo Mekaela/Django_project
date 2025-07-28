@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('about/', views.about),
-    path('posts/', include('posts.urls')),
+    path('farm_operations/', include('farm_operations.urls')),
     path('farms/', include('farms.urls')),
     path('users/', include('users.urls')),
     path('block/create/', block_create, name='block_create')

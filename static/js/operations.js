@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const farmId = farmSelect.value;
         fetch(`/farms/plots-for-farm/${farmId}/`)
         // Clear plots
-        plotSelect.innerHTML = '<option value="">-- Select Plot --</option>';
+        plotSelect.innerHTML = '';
         plotSelect.disabled = true;
 
         if (farmId) {
