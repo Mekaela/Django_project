@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import FarmOperation
 from farms.models import Farm
+from crops.models import Crop
+from users.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
 @login_required(login_url="/users/login/")
 def ops_list(request):
@@ -16,4 +19,12 @@ def op_page(request, slug):
 @login_required(login_url="/users/login/")
 def op_new(request):
     farms = Farm.objects.all()
-    return render(request, 'farm_operations/op_new.html', {'farms': farms})
+    crops = Crop.objects.all()
+    User = get_user_model()
+    users = User.objects.all()
+    objects = {
+        'farms': farms,
+        'crops': crops, 
+        'users': users, 
+    }
+    return render(request, 'farm_operations/op_new.html', objects)

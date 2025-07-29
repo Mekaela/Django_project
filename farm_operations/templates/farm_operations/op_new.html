@@ -62,12 +62,22 @@
     
                     <div class="form-group">
                         <label for="crop">Crop:</label>
-                        <input type="text" id="crop" name="crop" required>
+                        <select id="crop" name="crop" required>
+                            <option value="">-- Select Crop --</option>
+                            {% for crop in crops %}
+                                <option value="{{ crop.id }}">{{ crop.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="operator">Operator Name:</label>
-                        <input type="text" id="operator" name="operator">
+                        <select id="operator" name="operator" required>
+                            {% comment %} <option value="">-- Select Operator --</option> {% endcomment %}
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
     
@@ -110,7 +120,7 @@
                     </div>
     
                     <div class="form-group">
-                        <label for="waterAmount">Water Amount (mm or L):</label>
+                        <label for="waterAmount">Water Amount (mm):</label>
                         <input type="number" id="waterAmount" name="waterAmount" step="0.1">
                     </div>
     

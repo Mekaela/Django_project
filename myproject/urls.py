@@ -27,6 +27,7 @@ urlpatterns = [
     path('about/', views.about),
     path('farm_operations/', include('farm_operations.urls')),
     path('farms/', include('farms.urls')),
+    path('crops/', include('crops.urls')),
     path('users/', include('users.urls')),
     path('block/create/', block_create, name='block_create')
 ]

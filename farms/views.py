@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Farm, Block
+from crops.models import Crop
 from django.contrib.auth.decorators import login_required
 from .forms import FarmForm
 from django.core.serializers import serialize
@@ -10,7 +11,12 @@ from django.contrib.gis.geos import GEOSGeometry
 @login_required(login_url="/users/login/")
 def farms_list(request):
     farms = Farm.objects.all().order_by('-date')
-    return render(request, 'farms/farms_list.html', { 'farms': farms})
+    crops = Crop.objects.all()
+    context = {
+        'farms': farms,
+        'crops': crops, 
+    }
+    return render(request, 'farms/farms_list.html', context)
 
 @login_required(login_url="/users/login/")
 def farm_page(request, slug):
@@ -21,9 +27,7 @@ def farm_page(request, slug):
 def farm_new(request):
     if request.method == "POST":
         form = FarmForm(request.POST)
-        print('here')
         if form.is_valid():
-            print('inside form valid')
             # Access cleaned data
             farm = form.save()
             print(farm.name, farm.size_hectares, farm.slug, farm.farm_lat, farm.farm_long)
@@ -56,3 +60,4 @@ def block_create(request):
 def plots_for_farm(request, farm_id):
     plots = Block.objects.filter(farm_id=farm_id).values('id', 'name')
     return JsonResponse(list(plots), safe=False)
+

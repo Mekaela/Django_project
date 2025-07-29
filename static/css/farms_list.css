@@ -1,5 +1,5 @@
 /* layout styles */
-.farms-list {
+.farms-list, .crops-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -8,7 +8,7 @@
 }
 
 /* farm card styles */
-.farm {
+.farm, .crop {
   background-color: #ffffff;
   padding: 1rem 1.25rem;
   border-radius: 12px;

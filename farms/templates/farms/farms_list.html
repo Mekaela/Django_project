@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_js %}
-{% comment %} <script src="{% static 'js/farm.js' %}" defer></script> {% endcomment %}
+{% comment %} <script src="{% static 'js/farm_page.js' %}" defer></script> {% endcomment %}
 {% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/farms_list.css" %}">
@@ -34,6 +34,19 @@
     <a href="{% url 'farms:new-farm' %}" class="new-farm-link">
         Add New Farm
     </a>
+</section>
+
+<section class="crops-list">
+    <h1>Crops</h1>
+    {% comment %} This section lists all crops with their details {% endcomment %}
+    {% for crop in crops %}
+        <article class="crop">
+            <h2 class='crop-name'>{{ crop.name }}</h2>
+        </article>
+    {% endfor %}
+    {% if not crops %}
+        <p>No crops available.</p>
+    {% endif %}
 </section>
     
 {% endblock  %}
