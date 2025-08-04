@@ -29,7 +29,7 @@ urlpatterns = [
     path('farms/', include('farms.urls')),
     path('crops/', include('crops.urls')),
     path('users/', include('users.urls')),
-    path('block/create/', block_create, name='block_create')
+    path('block/create/', block_create, name='block_create'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

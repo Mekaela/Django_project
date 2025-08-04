@@ -13,226 +13,27 @@
 
 {% block content %}
     <body>
-        <!-- 
-        after setting up farm, block will be dropdown, weather will use API, crop will be dropdown
-        dropdowns can be other selector to make quicker: radio 
-        growth stage can be predicted based on planting in this field 
-        fertiliser type can automatically add the NPK ratio 
-        operator name can be the person logged in (but editable) -->
-        <div class="form-container">
-            {% comment %} <h1>Agricultural Record System</h1> {% endcomment %}
-            <form id="agricultureForm">
-                <!-- Record Type Selection -->
-                <div class="form-group record-type">
-                    <label for="recordType">Record Type:</label>
-                    <select id="recordType" name="recordType" required>
-                        <option value="">-- Select Record Type --</option>
-                        <option value="fertilizer">Fertilizer Application</option>
-                        <option value="irrigation">Irrigation</option>
-                        <option value="planting">Planting</option>
-                        <option value="harvest">Harvest</option>
-                        <option value="pesticide">Pesticide Application</option>
-                    </select>
-                </div>
-    
-                <!-- Common Fields for All Record Types -->
-                <div class="common-fields">
-                    <div class="form-group">
-                        <label for="date">Date:</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="farn">Farm:</label>
-                        <select id="farm" name="farm" required>
-                            <option value="">-- Select Farm --</option>
-                            {% for farm in farms %}
-                                <option value="{{ farm.id }}">{{ farm.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
 
-                    <div class="form-group">
-                        <label for="plot">Block Number:</label>
-                        <select id="plot" name="plot" required>
-                        <!-- Options will be filled via JavaScript -->
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="crop">Crop:</label>
-                        <select id="crop" name="crop" required>
-                            <option value="">-- Select Crop --</option>
-                            {% for crop in crops %}
-                                <option value="{{ crop.id }}">{{ crop.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="operator">Operator Name:</label>
-                        <select id="operator" name="operator" required>
-                            {% comment %} <option value="">-- Select Operator --</option> {% endcomment %}
-                            {% for user in users %}
-                                <option value="{{ user.id }}">{{ user.username }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-    
-                <!-- Dynamic Fields Sections -->
-                <div id="fertilizerFields" class="record-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="fertilizerType">Fertilizer Type:</label>
-                        <input type="text" id="fertilizerType" name="fertilizerType">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="npkRatio">NPK Ratio:</label>
-                        <input type="text" id="npkRatio" name="npkRatio" pattern="\d+-\d+-\d+" placeholder="N-P-K">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="applicationMethod">Application Method:</label>
-                        <select id="applicationMethod" name="applicationMethod">
-                            <option value="broadcast">Broadcast</option>
-                            <option value="banding">Banding</option>
-                            <option value="foliar">Foliar Spray</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="applicationRate">Application Rate (kg/ha):</label>
-                        <input type="number" id="applicationRate" name="applicationRate" step="0.01">
-                    </div>
-                </div>
-    
-                <div id="irrigationFields" class="record-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="irrigationMethod">Irrigation Method:</label>
-                        <select id="irrigationMethod" name="irrigationMethod">
-                            <option value="drip">Drip</option>
-                            <option value="sprinkler">Sprinkler</option>
-                            <option value="flood">Flood</option>
-                            <option value="manual">Manual</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="waterAmount">Water Amount (mm):</label>
-                        <input type="number" id="waterAmount" name="waterAmount" step="0.1">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="duration">Duration (minutes):</label>
-                        <input type="number" id="duration" name="duration">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="soilMoistureBefore">Soil Moisture Before:</label>
-                        <select id="soilMoistureBefore" name="soilMoistureBefore">
-                            <option value="dry">Dry</option>
-                            <option value="moist">Moist</option>
-                            <option value="wet">Wet</option>
-                        </select>
-                    </div>
-                </div>
-    
-                <div id="plantingFields" class="record-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="seedVariety">Seed Variety:</label>
-                        <input type="text" id="seedVariety" name="seedVariety">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="seedSource">Seed Source:</label>
-                        <input type="text" id="seedSource" name="seedSource">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="plantingMethod">Planting Method:</label>
-                        <select id="plantingMethod" name="plantingMethod">
-                            <option value="direct">Direct Seeding</option>
-                            <option value="transplant">Transplanting</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="plantingDensity">Planting Density (plants/ha):</label>
-                        <input type="number" id="plantingDensity" name="plantingDensity">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="rowSpacing">Row Spacing (cm):</label>
-                        <input type="number" id="rowSpacing" name="rowSpacing" step="0.1">
-                    </div>
-                </div>
-    
-                <div id="harvestFields" class="record-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="harvestMethod">Harvest Method:</label>
-                        <select id="harvestMethod" name="harvestMethod">
-                            <option value="manual">Manual</option>
-                            <option value="mechanical">Mechanical</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="yieldAmount">Yield Amount (kg/ha):</label>
-                        <input type="number" id="yieldAmount" name="yieldAmount" step="0.1">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="yieldQuality">Yield Quality:</label>
-                        <select id="yieldQuality" name="yieldQuality">
-                            <option value="excellent">Excellent</option>
-                            <option value="good">Good</option>
-                            <option value="fair">Fair</option>
-                            <option value="poor">Poor</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="harvestNotes">Harvest Notes:</label>
-                        <textarea id="harvestNotes" name="harvestNotes" rows="3"></textarea>
-                    </div>
-                </div>
-    
-                <div id="pesticideFields" class="record-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="pesticideName">Pesticide Name:</label>
-                        <input type="text" id="pesticideName" name="pesticideName">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="pesticideType">Pesticide Type:</label>
-                        <select id="pesticideType" name="pesticideType">
-                            <option value="herbicide">Herbicide</option>
-                            <option value="insecticide">Insecticide</option>
-                            <option value="fungicide">Fungicide</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="targetPest">Target Pest/Disease:</label>
-                        <input type="text" id="targetPest" name="targetPest">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="pesticideRate">Application Rate (per ha):</label>
-                        <input type="text" id="pesticideRate" name="pesticideRate">
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="withholdingPeriod">Withholding Period (days):</label>
-                        <input type="number" id="withholdingPeriod" name="withholdingPeriod">
-                    </div>
-                </div>
-    
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Save Record</button>
-                </div>
+        <div class="form-container" action="">
+            <form method="get" action="">
+                {% csrf_token %}
+                {% comment %} {{ form.operation_type }} {% endcomment %}
+                <p class="form-title">Reecord type: </p>
+                <select name="operation_type" id="operation_type" onchange="this.form.submit()" required>
+                    <option value="">-- Select Operation Type --</option>
+                    <option value="FERT">Fertilization</option>
+                    <option value="IRR">Irrigation</option>
+                    <option value="PLANT">Planting</option>
+                    <option value="HARV">Harvesting</option>
+                    <option value="PEST">Pesticide Application</option>
+                </select>
+                {% comment %} <button type="submit">Create Operation</button> {% endcomment %}
+            </form>
+            <form method="post" id='operation_form_body'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-btn">Save</button>
             </form>
         </div>
     </body>
