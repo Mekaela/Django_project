@@ -2,8 +2,10 @@
 {% load static %}
 {% block extra_js %}
 <script>
-  const blockCreateUrl = "{% url 'block_create' %}";
-  console.log("blockCreateUrl:", blockCreateUrl);
+    const blockCreateUrl = "{% url 'block_create' %}";
+    const farmId = 1;  
+    const lat_centre = {{ farm.farm_lat }};
+    const lng_centre = {{ farm.farm_long }};
 </script>
 <script src="{% static 'js/farm_page.js' %}" defer></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -25,7 +27,7 @@
         <article class="farm-basics">
             <h1 class="farm-name">{{ farm.name }}</h1>
             <p class="farm-detail">{{ farm.size_hectares }} ha</p>
-            <p class="farm-detail">latitude: {{ farm.farm_lat }}</p>
+            <p class="farm-detail" id="lat_centre">latitude: {{ farm.farm_lat }}</p>
             <p class="farm-detail">longitude: {{ farm.farm_long }}</p>
         </article>
         <div id="map" class="farm_map"></div>

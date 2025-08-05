@@ -19,7 +19,7 @@
             <form method="get" action="">
                 {% csrf_token %}
                 {% comment %} {{ form.operation_type }} {% endcomment %}
-                <p class="form-title">Reecord type: </p>
+                <p class="form-title">Record type: </p>
                 <select name="operation_type" id="operation_type" onchange="this.form.submit()" required>
                     <option value="">-- Select Operation Type --</option>
                     <option value="FERT">Fertilization</option>

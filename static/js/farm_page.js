@@ -1,7 +1,4 @@
 
-LAT_CENTRE = 38.844733; 
-LNG_CENTRE = -9.394690; 
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -20,8 +17,7 @@ function getCookie(name) {
 const csrf_token = getCookie("csrftoken");
 
 document.addEventListener("DOMContentLoaded", function(){
-    console.log("inside");
-    var map = L.map('map').setView([LAT_CENTRE, LNG_CENTRE], 15); // Set to default farm location
+    var map = L.map('map').setView([lat_centre, lng_centre], 15); // Set to default farm location
     // google isn't always up to date, so could update this later
     L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
         maxZoom: 20,
@@ -31,6 +27,23 @@ document.addEventListener("DOMContentLoaded", function(){
     // Feature Group to store drawn layers
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
+
+    if (farmId) {
+        // Fetch plots for the selected farm
+        fetch(`/farms/plots-for-farm/${farmId}/`)
+            .then(response => response.json())
+            .then(plots => {
+                plots.forEach(plot => {
+                var layer = L.geoJSON(plot.area).getLayers()[0]; // Get the polygon layer from GeoJSON
+                if(plot.name) {
+                  layer.bindPopup(plot.name);
+                }
+                drawnItems.addLayer(layer);
+              });
+            })
+            .catch(err => console.error('Failed to load blocks:', err));
+    }
+
 
     // Add drawing controls
     var drawControl = new L.Control.Draw({
@@ -49,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function(){
             featureGroup: drawnItems
         }
     });
-    console.log("inside 2");
     map.addControl(drawControl);
 
     

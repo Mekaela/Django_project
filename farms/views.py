@@ -58,6 +58,10 @@ def block_create(request):
 
 @login_required(login_url="/users/login/")
 def plots_for_farm(request, farm_id):
-    plots = Block.objects.filter(farm_id=farm_id).values('id', 'name')
+    plots = Block.objects.filter(farm_id=farm_id).values('id', 'name', 'area', 'farm_id')
+    # Convert to GeoJSON format
+    for plot in plots:
+        plot['area'] = json.loads(plot['area'].geojson) # Convert GEOSGeometry to GeoJSON       
+    # Return as JSON response
     return JsonResponse(list(plots), safe=False)
 
