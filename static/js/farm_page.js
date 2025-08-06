@@ -29,14 +29,14 @@ document.addEventListener("DOMContentLoaded", function(){
     map.addLayer(drawnItems);
 
     if (farmId) {
-        // Fetch plots for the selected farm
-        fetch(`/farms/plots-for-farm/${farmId}/`)
+        // Fetch blocks for the selected farm
+        fetch(`/farms/blocks-for-farm/${farmId}/`)
             .then(response => response.json())
-            .then(plots => {
-                plots.forEach(plot => {
-                var layer = L.geoJSON(plot.area).getLayers()[0]; // Get the polygon layer from GeoJSON
-                if(plot.name) {
-                  layer.bindPopup(plot.name);
+            .then(blocks => {
+                blocks.forEach(block => {
+                var layer = L.geoJSON(block.area).getLayers()[0]; // Get the polygon layer from GeoJSON
+                if(block.name) {
+                  layer.bindPopup(block.name);
                 }
                 drawnItems.addLayer(layer);
               });

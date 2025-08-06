@@ -57,11 +57,11 @@ def block_create(request):
     return JsonResponse({"error": "POST required"}, status=400)
 
 @login_required(login_url="/users/login/")
-def plots_for_farm(request, farm_id):
-    plots = Block.objects.filter(farm_id=farm_id).values('id', 'name', 'area', 'farm_id')
+def blocks_for_farm(request, farm_id):
+    blocks = Block.objects.filter(farm_id=farm_id).values('id', 'name', 'area', 'farm_id')
     # Convert to GeoJSON format
-    for plot in plots:
-        plot['area'] = json.loads(plot['area'].geojson) # Convert GEOSGeometry to GeoJSON       
+    for block in blocks:
+        block['area'] = json.loads(block['area'].geojson) # Convert GEOSGeometry to GeoJSON       
     # Return as JSON response
-    return JsonResponse(list(plots), safe=False)
+    return JsonResponse(list(blocks), safe=False)
 
